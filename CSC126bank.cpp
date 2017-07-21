@@ -14,13 +14,15 @@
 using namespace std;
 
 const int MAX_RECORDS = 50; //maximum records in the file.
-const int RECORD_LIMIT = 15;//number of jobs available records.
+const int RECORD_LIMIT = 7;//number of jobs available records.
 
 void show_menu(string accounts[], double balance[]);
 
 int search_accounts(string account, string accounts[]);
 
 void deposit(int account_pos, string accounts[], double balance[]);
+
+void withdraw(int account_pos, string accounts[], double balance[]);
 
 int main() {
     int index = 0;
@@ -64,7 +66,7 @@ void show_menu(string accounts[], double balance[]) {
     valid_account_number = search_accounts(user_account_number, accounts);
 
     if (valid_account_number != -1) {
-        cout << endl << "Account is ready to use" << endl;
+        cout << endl << "Account is ready to use " << valid_account_number << endl;
         do {
             cout << endl << "Select one of the following:" << endl;
             cout << "W - Withdrawal" << endl;
@@ -73,7 +75,7 @@ void show_menu(string accounts[], double balance[]) {
             cout << "Q  - Quit" << endl;
             cin >> transaction_type;
             if (transaction_type == 'W' || transaction_type == 'w') {
-                cout << "-----_W" << endl;
+                withdraw(valid_account_number, accounts, balance);
             } else if (transaction_type == 'D' || transaction_type == 'd') {
                 deposit(valid_account_number, accounts, balance);
             } else if (transaction_type == 'B' || transaction_type == 'b') {
@@ -83,7 +85,7 @@ void show_menu(string accounts[], double balance[]) {
             }
         } while (transaction_type != 'Q' || transaction_type != 'q');
     } else {
-        cout << "------";
+        cout << "Account " << user_account_number << " Cannot be found";
     }
 }
 
@@ -95,18 +97,25 @@ void show_menu(string accounts[], double balance[]) {
  */
 int search_accounts(string account, string accounts[]) {
     int index = 0;
+    int flag;
 
     cout << "Account Number Entered: " << account << endl << endl;
 
-    for (int i = 0; i < RECORD_LIMIT; i++) {
-        if (accounts[i] == account) {
-            cout << "Valid Account Number";
-            return index;
-        } else {
-            cout << "Invalid Account Number";
-            return -1;
+    for(int i=0; i<RECORD_LIMIT; i++){
+        cout << index << " " << accounts[i] << " ";
+        if(accounts[i] == account){
+            cout << "Account found";
+            flag = index;
+            cout << " " << flag;
+        }else{
+            flag = -1;
+            cout << " " << flag;
         }
+        index++;
+        cout << endl;
     }
+
+    return flag;
 }
 
 /**
@@ -127,4 +136,19 @@ void deposit(int account_pos, string accounts[], double balance[]) {
     cout << endl << "We have successfully processed your $" << deposit_amount << " to " << "the account : "
          << accounts[account_pos];
     cout << endl << "The current total is " << balance[account_pos];
+}
+
+void withdraw(int account_pos, string accounts[], double balance[]) {
+    double withdraw_amount;
+    double new_balance;
+
+    cout << "Please enter amount that you wish to withdraw " << accounts[account_pos] << endl;
+    cin >> withdraw_amount;
+
+    // deduct withdraw amount from existing balance
+    //balance[account_pos] -= withdraw_amount;
+    new_balance = balance[account_pos] - withdraw_amount;
+    cout << endl << "You have successfully withdrawn $" << withdraw_amount << " from " << "the account : "
+         << accounts[account_pos];
+    cout << endl << "The new balance is " << new_balance;
 }
