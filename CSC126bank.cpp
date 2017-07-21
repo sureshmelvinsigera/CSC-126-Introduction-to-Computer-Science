@@ -57,7 +57,7 @@ int main() {
  */
 void show_menu(string accounts[], double balance[]) {
     char transaction_type;
-    int valid_account_number = -1;
+    int valid_account_number;
     string user_account_number;
 
     cout << "Please enter the account number" << endl;
@@ -65,8 +65,11 @@ void show_menu(string accounts[], double balance[]) {
 
     valid_account_number = search_accounts(user_account_number, accounts);
 
+    //cout << "The account # is " << user_account_number << " " << "POS " << accounts[valid_account_number];
+
     if (valid_account_number != -1) {
-        cout << endl << "Account is ready to use " << valid_account_number << endl;
+        cout << "The account # is " << user_account_number << " " << "POS " << accounts[valid_account_number];
+        //cout << endl << "Account is ready to use " << valid_account_number << endl;
         do {
             cout << endl << "Select one of the following:" << endl;
             cout << "W - Withdrawal" << endl;
@@ -97,24 +100,23 @@ void show_menu(string accounts[], double balance[]) {
  */
 int search_accounts(string account, string accounts[]) {
     int index = 0;
-    int flag;
+    int flag = -1;
 
     cout << "Account Number Entered: " << account << endl << endl;
 
-    for(int i=0; i<RECORD_LIMIT; i++){
+    for (int i = 0; i < RECORD_LIMIT; i++) {
         cout << index << " " << accounts[i] << " ";
-        if(accounts[i] == account){
+        if (accounts[i] == account) {
             cout << "Account found";
             flag = index;
             cout << " " << flag;
-        }else{
-            flag = -1;
+        } else {
             cout << " " << flag;
         }
         index++;
         cout << endl;
     }
-
+    cout << endl << "The flag is " << flag << endl;
     return flag;
 }
 
