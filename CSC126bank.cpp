@@ -105,18 +105,11 @@ int search_accounts(string account, string accounts[]) {
     cout << "Account Number Entered: " << account << endl << endl;
 
     for (int i = 0; i < RECORD_LIMIT; i++) {
-        cout << index << " " << accounts[i] << " ";
         if (accounts[i] == account) {
-            cout << "Account found";
             flag = index;
-            cout << " " << flag;
-        } else {
-            cout << " " << flag;
         }
         index++;
-        cout << endl;
     }
-    cout << endl << "The flag is " << flag << endl;
     return flag;
 }
 
