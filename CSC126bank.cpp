@@ -28,12 +28,13 @@ void check_balance();
 
 void quit();
 
+void save_data(string accounts[], double balance[]);
+
 string accounts[MAX_RECORDS];
 double balance[MAX_RECORDS];
 
 int main() {
     int index = 0;
-
 
     ifstream inFile;
     inFile.open("bank50.txt");
@@ -56,16 +57,15 @@ int main() {
     return 0;
 }
 
-
 void show_menu() {
     char transaction_type;
-
+    cout << setw(15) << left << "Welcome to the Staten Island Bank" << endl;
     do {
-        cout << endl << "Select one of the following:" << endl;
-        cout << "W - Withdrawal" << endl;
-        cout << "D  - Deposit" << endl;
-        cout << "B  - Balance" << endl;
-        cout << "Q  - Quit" << endl;
+        cout << "Select one of the following:" << endl;
+        cout << "To Withdrawal" << setw(10) << right << "W" << endl;
+        cout << "To Deposit" << setw(13) << "D" << right << endl;
+        cout << "To Balance" << setw(13) << "B" << right << endl;
+        cout << "To Quit" << setw(16) << "Q" << right << endl;
         cin >> transaction_type;
         if (transaction_type == 'W' || transaction_type == 'w') {
             withdraw();
@@ -139,19 +139,30 @@ void withdraw() {
 
     account_pos = search_accounts(user_account_number, accounts);
 
-    cout << account_pos;
+//    cout << account_pos;
 
     if (account_pos != -1) {
         cout << endl << "Account # " << accounts[account_pos];
         cout << endl << "Please enter amount that you wish to withdraw " << accounts[account_pos] << endl;
-        cin >> withdraw_amount;
 
-        // deduct withdraw amount from existing balance
-        balance[account_pos] -= withdraw_amount;
-        cout << endl << "You have successfully withdrawn $" << withdraw_amount << " from " << "the account : "
-             << accounts[account_pos];
+        do {
+            cin >> withdraw_amount;
+            // deduct withdraw amount from existing balance
+            if (balance[account_pos] < withdraw_amount) {
+                cout << endl << "Insufficient funds";
+                cout << endl << "Please enter amount that you wish to withdraw " << accounts[account_pos] << endl;
+            } else {
+                balance[account_pos] -= withdraw_amount;
+                cout << endl << "You have successfully withdrawn $" << withdraw_amount << " from "
+                     << "the account : "
+                     << accounts[account_pos];
+                save_data(accounts, balance);
+                show_menu();
+            }
+        } while (balance[account_pos] < withdraw_amount);
+
     } else {
-        cout << endl << "The new balance is " << balance[account_pos];
+        cout << endl << "We cannot find the " << accounts[account_pos] << " in our system" << endl;
     }
 }
 
@@ -172,6 +183,28 @@ void check_balance() {
     }
 }
 
+/**
+ *
+ */
 void quit() {
     exit(0);
+}
+
+/**
+ * @details
+ * @param accounts
+ * @param balance
+ * @author
+ * @date
+ */
+void save_data(string accounts[], double balance[]) {
+    ofstream outFile;
+    outFile.open("bank50.txt");
+
+    if (outFile.is_open()) {
+        for (int i = 0; i < MAX_RECORDS; i++) {
+            outFile << accounts[i] << " " << balance[i] << endl;
+        }
+    }
+    outFile.close();
 }
