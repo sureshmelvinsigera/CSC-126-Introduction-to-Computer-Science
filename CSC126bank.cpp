@@ -14,7 +14,7 @@
 using namespace std;
 
 const int MAX_RECORDS = 50; //maximum records in the file.
-const int RECORD_LIMIT = 7;//number of jobs available records.
+const int RECORD_LIMIT = 15;//number of jobs available records.
 
 void show_menu(string accounts[], double balance[]);
 
@@ -23,6 +23,8 @@ int search_accounts(string account, string accounts[]);
 void deposit(int account_pos, string accounts[], double balance[]);
 
 void withdraw(int account_pos, string accounts[], double balance[]);
+
+void check_balance(int account_pos, double balance[]);
 
 int main() {
     int index = 0;
@@ -82,7 +84,7 @@ void show_menu(string accounts[], double balance[]) {
             } else if (transaction_type == 'D' || transaction_type == 'd') {
                 deposit(valid_account_number, accounts, balance);
             } else if (transaction_type == 'B' || transaction_type == 'b') {
-                cout << "Your Account Balance" << endl;
+                check_balance(valid_account_number, balance);
             } else if (transaction_type == 'Q' || transaction_type == 'q') {
                 exit(0);
             }
@@ -96,7 +98,7 @@ void show_menu(string accounts[], double balance[]) {
  * @details
  * @param account
  * @param accounts
- * @return user account index position
+ * @return flag
  */
 int search_accounts(string account, string accounts[]) {
     int index = 0;
@@ -142,8 +144,13 @@ void withdraw(int account_pos, string accounts[], double balance[]) {
 
     // deduct withdraw amount from existing balance
     //balance[account_pos] -= withdraw_amount;
-    new_balance = balance[account_pos] - withdraw_amount;
+    balance[account_pos] = balance[account_pos] - withdraw_amount;
     cout << endl << "You have successfully withdrawn $" << withdraw_amount << " from " << "the account : "
          << accounts[account_pos];
-    cout << endl << "The new balance is " << new_balance;
+    cout << endl << "The new balance is " << balance[account_pos];
+}
+
+void check_balance(int account_pos, double balance[]) {
+
+    cout << "Your current balance is: " << balance[account_pos] << endl;
 }
