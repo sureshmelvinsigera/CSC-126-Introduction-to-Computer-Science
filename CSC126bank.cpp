@@ -61,6 +61,11 @@ int main() {
     return 0;
 }
 
+/**
+ * @details
+ * @author
+ * @date
+ */
 void show_menu() {
     char transaction_type;
     cout << setw(15) << left << "Welcome to the Staten Island Bank" << endl;
@@ -86,12 +91,13 @@ void show_menu() {
     } while (transaction_type != 'Q' || transaction_type != 'q');
 }
 
-
 /**
  * @details
  * @param account
  * @param accounts
- * @return flag
+ * @return
+ * @author
+ * @date
  */
 int search_accounts(string account, string accounts[]) {
     int index = 0;
@@ -108,9 +114,8 @@ int search_accounts(string account, string accounts[]) {
 
 /**
  * @details
- * @param account_pos
- * @param accounts
- * @param balance
+ * @author
+ * @date
  */
 void deposit() {
     string user_account_number;
@@ -137,6 +142,11 @@ void deposit() {
     }
 }
 
+/**
+ * @details
+ * @author
+ * @date
+ */
 void withdraw() {
     string user_account_number;
     double withdraw_amount;
@@ -174,6 +184,11 @@ void withdraw() {
     }
 }
 
+/**
+ * @details
+ * @author
+ * @date
+ */
 void check_balance() {
     string user_account_number;
     int account_pos;
@@ -192,7 +207,9 @@ void check_balance() {
 }
 
 /**
- *
+ * @details
+ * @author
+ * @date
  */
 void quit() {
     exit(0);
@@ -218,7 +235,9 @@ void save_data(string accounts[], double balance[]) {
 }
 
 /**
- *
+ * @details
+ * @author
+ * @date
  */
 void add_new_account(){
     string new_account_number;
@@ -239,7 +258,9 @@ void add_new_account(){
 }
 
 /**
- *
+ * @details
+ * @author
+ * @date
  * @param accounts
  * @return
  */
